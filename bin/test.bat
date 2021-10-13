@@ -1,0 +1,1 @@
+python ..\main.py D:\test\fullmonkey.json
