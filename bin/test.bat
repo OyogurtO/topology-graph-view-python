@@ -1,1 +1,1 @@
-python ..\main.py D:\test\fullmonkey.json
+python ..\main.py D:\test\map\fullmonkey.json
