@@ -10,7 +10,10 @@ def view(nodes, edges, objects):
     node_dict = {}
     for node in nodes:
         node_dict[node['nodeLabel']] = node
-        plt.scatter(node['xCoordinate'], node['yCoordinate'])
+        x = node['xCoordinate']
+        y = node['yCoordinate']
+        plt.scatter(x, y)
+        plt.text(x+0.1, y+0.05, node['nodeNumber'], ha='left', va='bottom', fontsize=10.5)
     for edge in edges:
         x1 = node_dict[edge['beginNodeLabel']]['xCoordinate']
         y1 = node_dict[edge['beginNodeLabel']]['yCoordinate']
