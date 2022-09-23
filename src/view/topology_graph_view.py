@@ -22,7 +22,7 @@ def view(nodes, edges, name):
         node_dict[node['nodeLabel']] = node
         x = node['xCoordinate']
         y = node['yCoordinate']
-        plt.text(x+0.1, y+0.05, node['nodeNumber'], ha='left', va='bottom', fontsize=10.5)
+        plt.text(x+0.1, y+0.05, node['nodeLabel'], ha='left', va='bottom', fontsize=8)
         xs.append(x)
         ys.append(y)
     sc = plt.scatter(xs, ys)
