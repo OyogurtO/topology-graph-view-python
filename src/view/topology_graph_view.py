@@ -4,8 +4,14 @@ import numpy as np
 matplotlib.use('TkAgg')
 
 
-def view(nodes, edges, objects):
+def change_figure(i):
+    plt.figure(i)
+
+
+def view(nodes, edges, name):
     fig, ax = plt.subplots()
+
+    ax.set_title(name)
 
     node_dict = {}
     xs = []
@@ -40,7 +46,12 @@ def view(nodes, edges, objects):
     def update_anno(ind):
         i = ind["ind"][0]
         anno.xy = sc.get_offsets()[i]
-        anno.set_text("({}, {})".format(nodes[i]["xCoordinate"], nodes[i]["yCoordinate"]))
+        txt = "({}, {})\n".format(nodes[i]["xCoordinate"], nodes[i]["yCoordinate"])
+        for (k,v) in nodes[i].items():
+            txt += "{}:{}\n".format(k, v)
+        anno.set_text(txt)
+        ay = -12 * (len(nodes[i])+2)
+        anno.set_y(ay)
         anno.get_bbox_patch().set_alpha(0.8)
 
     #  handle mouse move event. check if cursor is on a node
@@ -59,6 +70,8 @@ def view(nodes, edges, objects):
 
     fig.canvas.mpl_connect("motion_notify_event", on_move)
 
+
+def show():
     plt.show()
 
 
