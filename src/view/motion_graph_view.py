@@ -34,10 +34,13 @@ def view(nodes, edges, name):
         tgt = edge['target']
         x2 = get_x(tgt)
         y2 = get_y(tgt)
+        # blue arrow represents action
         color = 'blue'
         if y1 != y2:
+            # green arrow represents dependency
             color = 'green'
         ax.arrow(x1, y1, x2 - x1, y2 - y1, length_includes_head=True, head_width=0.1, head_length=0.2, color=color)
+        # If wait cost present, use blue arrow represents action cost, and use red arrow represents wait cost
         if y1 == y2 and round(x2 - x1, 2) > round(edge['cost'], 2):
             ax.arrow(x1, y1, edge['cost'], 0, length_includes_head=True, head_width=0.2,
                      head_length=0.2, color='blue')
@@ -47,5 +50,11 @@ def view(nodes, edges, name):
     anno = ax.annotate(text="", xy=(0, 0), xytext=(10, -20), textcoords="offset points",
                        bbox=dict(boxstyle="round", fc="w"), arrowprops=dict(arrowstyle="->"))
     anno.set_visible(False)
+
+    # If the graph only contains one path, the arrows may be too large. So force the image height >= 10.
+    ylim = ax.get_ylim()
+    if ylim[1]-ylim[0] < 10:
+        mid = (ylim[0]+ylim[1])/2
+        ax.set_ylim([mid-5, mid+5])
 
     plt.show()
