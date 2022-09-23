@@ -1,5 +1,6 @@
 import matplotlib
 import matplotlib.pyplot as plt
+import math
 
 matplotlib.use('TkAgg')
 
@@ -10,6 +11,10 @@ def get_x(node):
 
 def get_y(node):
     return node['robotId'] - 10000
+
+
+def parse_pose(pose):
+    return '('+str(pose['x'])+', '+str(pose['y'])+', '+str(math.degrees(pose['theta']))+')'
 
 
 def view(nodes, edges, name):
@@ -56,5 +61,30 @@ def view(nodes, edges, name):
     if ylim[1]-ylim[0] < 10:
         mid = (ylim[0]+ylim[1])/2
         ax.set_ylim([mid-5, mid+5])
+
+    def update_anno(ind):
+        i = ind["ind"][0]
+        anno.xy = sc.get_offsets()[i]
+        anno.set_text(parse_pose(nodes[i]['pose']))
+        anno.set_x(-30)
+        # ay = -12 * (len(nodes[i])+2)
+        # anno.set_y(ay)
+        anno.get_bbox_patch().set_alpha(0.8)
+
+    #  handle mouse move event. check if cursor is on a node
+    def on_move(event):
+        vis = anno.get_visible()
+        if event.inaxes == ax:
+            cont, ind = sc.contains(event)
+            if cont:
+                update_anno(ind)
+                anno.set_visible(True)
+                fig.canvas.draw_idle()
+            else:
+                if vis:
+                    anno.set_visible(False)
+                    fig.canvas.draw_idle()
+
+    fig.canvas.mpl_connect("motion_notify_event", on_move)
 
     plt.show()
