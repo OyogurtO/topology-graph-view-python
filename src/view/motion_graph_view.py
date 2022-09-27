@@ -6,7 +6,7 @@ matplotlib.use('TkAgg')
 
 
 def get_x(node):
-    return node['time']
+    return node['departureTime']
 
 
 def get_y(node):
@@ -27,7 +27,7 @@ def view(nodes, edges, name):
     for node in nodes:
         x = get_x(node)
         y = get_y(node)
-        plt.text(x-0.25, y + 0.05, round(node['time'], 2), ha='left', va='bottom', fontsize=8)
+        plt.text(x-0.25, y + 0.05, round(x, 2), ha='left', va='bottom', fontsize=8)
         xs.append(x)
         ys.append(y)
     sc = plt.scatter(xs, ys)
