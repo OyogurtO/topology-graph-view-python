@@ -10,5 +10,5 @@ def load_and_view(file_name):
         floor = data['floorList'][i]
         if i != 0:
             topology_graph_view.change_figure(i)
-        topology_graph_view.view(floor['nodeList'], floor['edgeList'], floor['floorNumber'])
+        topology_graph_view.view(floor['nodeList'], floor['edgeList'], file_name + ' [' + floor['floorNumber']+']')
     topology_graph_view.show()

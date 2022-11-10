@@ -42,6 +42,12 @@ def view(nodes, edges, name):
                        bbox=dict(boxstyle="round", fc="w"), arrowprops=dict(arrowstyle="->"))
     anno.set_visible(False)
 
+    # If the graph only contains one path, the arrows may be too large. So force the image height >= 10.
+    ylim = ax.get_ylim()
+    if ylim[1] - ylim[0] < 10:
+        mid = (ylim[0] + ylim[1]) / 2
+        ax.set_ylim([mid - 5, mid + 5])
+
     #  update anno data when cursor is on a node
     def update_anno(ind):
         i = ind["ind"][0]
